@@ -1,0 +1,46 @@
+{
+  "name": "react-naitive-pageable-scrollview",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint -c .eslintrc . --ignore-path .gitignore",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-native-scrollview/react-naitive-pageable-scrollview.git"
+  },
+  "keywords": [
+    "react-native-component",
+    "react-component",
+    "react-native",
+    "ios",
+    "tab",
+    "pageable"
+  ],
+  "author": "Cheng Bing",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/react-native-scrollview/react-naitive-pageable-scrollview/issues"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.20.0"
+  },
+  "homepage": "https://github.com/react-native-scrollview/react-naitive-pageable-scrollview/blob/master/README.md",
+  "dependencies": {
+    "react": "16.3.1",
+    "react-native": "0.55.4",
+    "react-naitive-pageable-scrollview": "file:../"
+  },
+  "devDependencies": {
+    "babel-jest": "23.0.1",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "23.1.0",
+    "react-test-renderer": "16.3.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
+
