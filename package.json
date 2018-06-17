@@ -1,5 +1,5 @@
 {
-  "name": "react-naitive-pageable-scrollview",
+  "name": "react-native-pageable-scrollview",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-native-scrollview/react-naitive-pageable-scrollview.git"
+    "url": "git+https://github.com/react-native-scrollview/react-native-pageable-scrollview.git"
   },
   "keywords": [
     "react-native-component",
@@ -22,12 +22,12 @@
   "author": "Cheng Bing",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/react-native-scrollview/react-naitive-pageable-scrollview/issues"
+    "url": "https://github.com/react-native-scrollview/react-native-pageable-scrollview/issues"
   },
   "peerDependencies": {
     "react-native": ">=0.20.0"
   },
-  "homepage": "https://github.com/react-native-scrollview/react-naitive-pageable-scrollview/blob/master/README.md",
+  "homepage": "https://github.com/react-native-scrollview/react-native-pageable-scrollview/blob/master/README.md",
   "dependencies": {
     "react": "16.3.1",
     "react-native": "0.55.4",
