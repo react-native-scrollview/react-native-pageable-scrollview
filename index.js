@@ -29,7 +29,7 @@ export default class PageableScrollView extends Component {
     constructor(props){
         super(props);
 
-        let { initPage = 0, containerPadding = DefaultPadding, children } = (props || {});
+        let { initPage = 0, containerWidth = SCREEN_WIDTH, containerPadding = DefaultPadding, children } = (props || {});
         initPage = initPage <=0 ? 0 : initPage; children = children || [];
 
         initPage = initPage >= children.length - 1 ? children.length - 1 : initPage;
@@ -37,34 +37,35 @@ export default class PageableScrollView extends Component {
         this.state = {
             pageNum: children.length,
             pageIndex: initPage,
-            containerWidth: SCREEN_WIDTH - containerPadding * 2,
+            containerWidth,
+            contentWidth: containerWidth - containerPadding * 2,
             containerPadding: containerPadding
         }
     }
 
     componentDidUpdate(){
-        let { pageIndex, containerWidth, containerPadding } = this.state;
-        let xOffset = (containerWidth - containerPadding) * pageIndex || 0;
+        let { pageIndex, contentWidth, containerPadding } = this.state;
+        let xOffset = (contentWidth - containerPadding) * pageIndex || 0;
 
         this.scrollView.scrollTo({x: xOffset, y: 0, animated: true});
     }
     componentDidMount(){
-        let { pageIndex, containerWidth, containerPadding } = this.state;
-        let xOffset = (containerWidth - containerPadding) * pageIndex || 0;
+        let { pageIndex, contentWidth, containerPadding } = this.state;
+        let xOffset = (contentWidth - containerPadding) * pageIndex || 0;
 
         this.scrollView.scrollTo({x: xOffset, y: 0, animated: true});
     }
 
     render() {
-        let { containerWidth, containerPadding } = this.state;
+        let {containerWidth, contentWidth, containerPadding } = this.state;
 
         let beginningStyle = {
             marginLeft: containerPadding * 2
         };
 
         let { children = [], style, contentStyle } = this.props;
-        let scrollStyle = [],pageStyle = [{
-            width: containerWidth,
+        let scrollStyle = [{width: containerWidth}],pageStyle = [{
+            width: contentWidth,
             paddingRight: containerPadding * 2,
             marginLeft: -containerPadding
         }];
@@ -83,49 +84,47 @@ export default class PageableScrollView extends Component {
 
         return (<ScrollView ref={(scrollView) => { this.scrollView = scrollView; }}
                             style={[styles.scroll,...scrollStyle]}
-                            pagingEnabled
                             scrollEnabled
                             horizontal
                             showsHorizontalScrollIndicator={false}
+                            scrollEventThrottle={100}
                             onScroll={this._onScroll}
                             onScrollEndDrag={this._onScrollEnd} >
-                    {
-                        children.map((component,index) => {
-                            let style = [...pageStyle]; index == 0 && (style.push(beginningStyle));
-                            return <View key={'children_component_' + index} style={[...[styles.content],...style]}>{component}</View>
-                        })
-                    }
-                </ScrollView>);
+            {
+                children.map((component,index) => {
+                    let style = [...pageStyle]; index == 0 && (style.push(beginningStyle));
+                    return <View key={'children_component_' + index} style={[...[styles.content],...style]}>{component}</View>
+                })
+            }
+        </ScrollView>);
     }
     _onScroll = (event) => {
         let { nativeEvent } = (event || {}),{ contentOffset } = (nativeEvent || {});
         let { x, y } = (contentOffset || {});
 
-        let { pageIndex, pageNum, containerWidth, containerPadding } = this.state; pageIndex = pageIndex || 0;
-        let prevX = (containerWidth - containerPadding ) * pageIndex;
+        let { pageIndex, pageNum, contentWidth, containerPadding } = this.state; pageIndex = pageIndex || 0;
+        let prevX = (contentWidth - containerPadding ) * pageIndex;
 
         let offsetX = x - prevX,offsetY = 0,{ onScroll } = this.props;
-        onScroll && onScroll({offsetX, winWidth: containerWidth});
+        onScroll && onScroll({offsetX, winWidth: contentWidth});
 
     }
     _onScrollEnd = (event) => {
         let { nativeEvent } = (event || {}),{ contentOffset } = (nativeEvent || {});
         let { x, y } = (contentOffset || {});
 
-        let { pageIndex, pageNum, containerWidth, containerPadding } = this.state;
+        let { pageIndex, pageNum, containerWidth, contentWidth, containerPadding } = this.state;
 
-        let prevX = (containerWidth - containerPadding ) * pageIndex;
-        let xOffset = x - prevX,xHalf = containerWidth / 2.0;
+        let prevX = (contentWidth - containerPadding ) * pageIndex;
+        let xOffset = x - prevX;
 
-        if(xOffset <= -xHalf && pageIndex > 0){
-            this.goToPage(pageIndex - 1);
-        }
-        else if(xOffset >= xHalf && pageIndex < pageNum - 1){
-            this.goToPage(pageIndex + 1);
-        }
-        else{
-            this.goToPage(pageIndex);
-        }
+        let offsetNum = Math.round(xOffset / containerWidth);
+        pageIndex = pageIndex + offsetNum;
+
+        pageIndex = pageIndex < 0 ? 0: pageIndex;
+        pageIndex = pageIndex > pageNum - 1 ? pageNum - 1 : pageIndex;
+
+        this.goToPage(pageIndex);
     }
     _onPageChanged = () =>{
         let { pageIndex } = this.state,{ onPageChanged } = this.props;

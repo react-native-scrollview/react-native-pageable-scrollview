@@ -46,12 +46,12 @@ export default class App extends Component<Props> {
     render() {
 
         return (<PageableScrollView style={[styles.scroll]} contentStyle={[styles.page]}>
-            <View style={[styles.content]}><Text style={[styles.normal]}>The first page</Text></View>
-            <View style={[styles.content]}><Text style={[styles.normal]}>The second page</Text></View>
-            <View style={[styles.content]}><Text style={[styles.normal]}>The third page</Text></View>
-            <View style={[styles.content]}><Text style={[styles.normal]}>The fourth page</Text></View>
-            <View style={[styles.content]}><Text style={[styles.normal]}>The fifth page</Text></View>
-        </PageableScrollView>)
+                    <View style={[styles.content]}><Text style={[styles.normal]}>The first page</Text></View>
+                    <View style={[styles.content]}><Text style={[styles.normal]}>The second page</Text></View>
+                    <View style={[styles.content]}><Text style={[styles.normal]}>The third page</Text></View>
+                    <View style={[styles.content]}><Text style={[styles.normal]}>The fourth page</Text></View>
+                    <View style={[styles.content]}><Text style={[styles.normal]}>The fifth page</Text></View>
+                </PageableScrollView>)
     }
 
 }
