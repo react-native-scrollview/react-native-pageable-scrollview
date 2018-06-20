@@ -38,33 +38,36 @@ export default class PageableScrollView extends Component {
             pageNum: children.length,
             pageIndex: initPage,
             containerWidth,
-            contentWidth: containerWidth - containerPadding * 2,
             containerPadding: containerPadding
         }
     }
 
     componentDidUpdate(){
-        let { pageIndex, contentWidth, containerPadding } = this.state;
+        let { pageIndex, containerWidth, containerPadding } = this.state;
+        let contentWidth = containerWidth - containerPadding * 2;
         let xOffset = (contentWidth - containerPadding) * pageIndex || 0;
 
         this.scrollView.scrollTo({x: xOffset, y: 0, animated: true});
     }
     componentDidMount(){
-        let { pageIndex, contentWidth, containerPadding } = this.state;
+        let { pageIndex, containerWidth, containerPadding } = this.state;
+        let contentWidth = containerWidth - containerPadding * 2;
+
         let xOffset = (contentWidth - containerPadding) * pageIndex || 0;
 
         this.scrollView.scrollTo({x: xOffset, y: 0, animated: true});
     }
 
     render() {
-        let {containerWidth, contentWidth, containerPadding } = this.state;
+        let {containerWidth, containerPadding } = this.state;
+        let contentWidth = containerWidth - containerPadding * 2;
 
         let beginningStyle = {
             marginLeft: containerPadding * 2
         };
 
         let { children = [], style, contentStyle } = this.props;
-        let scrollStyle = [{width: containerWidth}],pageStyle = [{
+        let scrollStyle = [],pageStyle = [{
             width: contentWidth,
             paddingRight: containerPadding * 2,
             marginLeft: -containerPadding
@@ -89,6 +92,7 @@ export default class PageableScrollView extends Component {
                             showsHorizontalScrollIndicator={false}
                             scrollEventThrottle={100}
                             onScroll={this._onScroll}
+                            onLayout={this._onLayout}
                             onScrollEndDrag={this._onScrollEnd} >
             {
                 children.map((component,index) => {
@@ -98,11 +102,22 @@ export default class PageableScrollView extends Component {
             }
         </ScrollView>);
     }
+    _onLayout = (event) => {
+        let { nativeEvent } = (event || {}), { layout } = (nativeEvent || {});
+        let {x, y, width = SCREEN_WIDTH, height} = (layout || {});
+
+        let { containerPadding } = this.state;
+
+        this.setState({
+            containerWidth: width
+        });
+    }
     _onScroll = (event) => {
         let { nativeEvent } = (event || {}),{ contentOffset } = (nativeEvent || {});
         let { x, y } = (contentOffset || {});
 
-        let { pageIndex, pageNum, contentWidth, containerPadding } = this.state; pageIndex = pageIndex || 0;
+        let { pageIndex, pageNum, containerWidth, containerPadding } = this.state; pageIndex = pageIndex || 0;
+        let contentWidth = containerWidth - containerPadding * 2;
         let prevX = (contentWidth - containerPadding ) * pageIndex;
 
         let offsetX = x - prevX,offsetY = 0,{ onScroll } = this.props;
@@ -113,7 +128,8 @@ export default class PageableScrollView extends Component {
         let { nativeEvent } = (event || {}),{ contentOffset } = (nativeEvent || {});
         let { x, y } = (contentOffset || {});
 
-        let { pageIndex, pageNum, containerWidth, contentWidth, containerPadding } = this.state;
+        let { pageIndex, pageNum, containerWidth, containerPadding } = this.state;
+        let contentWidth = containerWidth - containerPadding * 2;
 
         let prevX = (contentWidth - containerPadding ) * pageIndex;
         let xOffset = x - prevX;
@@ -133,7 +149,7 @@ export default class PageableScrollView extends Component {
 
     }
 
-    /****************************** 暴露给外部调用的接口 开始 *******************************************/
+    /****************************** public function for dev start **************************************/
 
     goToPrev = () => {
         let { pageIndex } = this.state; pageIndex -= 1;
@@ -173,7 +189,7 @@ export default class PageableScrollView extends Component {
         });
     }
 
-    /****************************** 暴露给外部调用的接口 结束 *******************************************/
+    /****************************** public function for dev end **************************************/
 
 }
 
