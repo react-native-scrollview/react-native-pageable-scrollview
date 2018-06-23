@@ -2,11 +2,11 @@
 
 ## Example one
 
-![pageable-scrollview preview](https://github.com/react-native-scrollview/react-native-pageable-scrollview/blob/master/docs/images/1.gif)
+![pageable-scrollview preview](react-native-pageable-scrollview/docs/images/1.gif)
 
 ## Example two
 
-![pageable-scrollview preview](https://github.com/react-native-scrollview/react-native-pageable-scrollview/blob/master/docs/images/2.gif)
+![pageable-scrollview preview](react-native-pageable-scrollview/docs/images/2.gif)
 
 ## Installation
 ```
