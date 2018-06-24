@@ -15,8 +15,13 @@ import {
 } from 'react-native';
 
 import PageableScrollView from 'react-native-pageable-scrollview';
+import {
+    BothSideNavigator,
+    TopNavigator,
+    BottomNavigator
+} from 'react-native-pageable-scrollview/components/Navigator';
 
-import { BothSideNavigator, TopNavigator, BottomNavigator } from './components/Navigator';
+/*import { BothSideNavigator, TopNavigator, BottomNavigator } from './components/Navigator';*/
 
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
