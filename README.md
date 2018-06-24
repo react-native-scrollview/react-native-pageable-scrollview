@@ -8,6 +8,11 @@
 
 ![pageable-scrollview preview](https://github.com/react-native-scrollview/react-native-pageable-scrollview/blob/master/docs/images/2.gif)
 
+## Example three
+
+![pageable-scrollview preview](https://github.com/react-native-scrollview/react-native-pageable-scrollview/blob/master/docs/images/3.gif)
+
+
 ## Installation
 ```
 npm install --save react-native-pageable-scrollview
